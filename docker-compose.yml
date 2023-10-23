@@ -1,0 +1,28 @@
+services:
+  core:
+    build:
+      context: .
+      dockerfile: ./apps/core/Dockerfile
+      target: development
+    command: npm run start:dev core
+    env_file:
+      - ./apps/core/.env
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3000:3000'
+
+  mongodb:
+    image: mongo
+    restart: always
+    volumes:
+      - 'mongodb_master_data:/data/db'
+    ports:
+      - '27017:27017'
+
+volumes:
+  mongodb_master_data:
+    driver: local
