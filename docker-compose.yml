@@ -1,27 +1,27 @@
 services:
-  core:
+  orders:
     build:
       context: .
-      dockerfile: ./apps/core/Dockerfile
+      dockerfile: ./apps/orders/Dockerfile
       target: development
-    command: npm run start:dev core
+    command: npm run start:dev orders
     env_file:
-      - ./apps/core/.env
+      - ./apps/orders/.env
     depends_on:
-      - mongodb
+      - mongodb-primary
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - '3000:3000'
 
-  mongodb:
+  mongodb-primary:
     image: mongo
     restart: always
     volumes:
       - 'mongodb_master_data:/data/db'
     ports:
-      - '27017:27017'
+      - '64000:27017'
 
 volumes:
   mongodb_master_data:
