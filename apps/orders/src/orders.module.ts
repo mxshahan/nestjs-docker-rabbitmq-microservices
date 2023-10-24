@@ -4,7 +4,7 @@ import * as Joi from 'joi';
 import { DatabaseModule } from '@app/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Order, OrderSchema } from './schemas/order.schema';
-import { OrdersRepository } from './order.repository';
+import { OrdersRepository } from './orders.repository';
 import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
 
