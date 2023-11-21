@@ -1,0 +1,38 @@
+
+Auth -> 
+
+Core User: 
+  UserID: 1
+  UserID: 2
+  UserID: 3 
+
+UserCompany:
+  UserID: 1 - Staff
+  CompanyID: A
+
+Company A,
+  UserID: 1, Admin
+  UserID: 3, Employee
+
+Company B
+  UserID: 1, Admin
+  UserID: 2, Employee
+
+
+Table for core APP
+User
+Company
+
+
+OSI 
+Application Layer
+Data Layer
+
+RabbitMQ
+Radis
+Kafka
+
+
+Networking
+Orcastation
+Kubernates

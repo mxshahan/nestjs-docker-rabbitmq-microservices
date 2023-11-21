@@ -5,7 +5,7 @@ import {
   MongooseModuleOptions,
   MongooseOptionsFactory,
 } from '@nestjs/mongoose';
-
+import { Request } from 'express';
 @Injectable({ scope: Scope.REQUEST })
 export class DatabaseService implements MongooseOptionsFactory {
   constructor(
@@ -13,14 +13,13 @@ export class DatabaseService implements MongooseOptionsFactory {
     private readonly configService: ConfigService,
   ) {}
 
-  name: string;
-
-  init(name) {
-    this.name = name;
-  }
   createMongooseOptions(): MongooseModuleOptions {
+    console.log(99999999, this.request.headers.company);
     return {
-      uri: this.configService.get<string>('MONGODB_URI') + '/' + this.name,
+      uri:
+        this.configService.get<string>('MONGODB_URI') +
+        '/' +
+        this.request.headers.company,
     };
   }
 }

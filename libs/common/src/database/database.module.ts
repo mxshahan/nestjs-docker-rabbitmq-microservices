@@ -1,10 +1,7 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
-
-interface DatabaseModuleOptions {
-  name: string;
-}
+import { DatabaseService } from './database.service';
 
 @Module({
   imports: [
@@ -17,21 +14,23 @@ interface DatabaseModuleOptions {
       inject: [ConfigService],
     }),
   ],
+  // imports: [
+  //   MongooseModule.forRootAsync({
+  //     useClass: DatabaseService,
+  //   }),
+  // ],
+  // providers: [ConfigService],
 })
 export class DatabaseModule {
-  static register({ name }: DatabaseModuleOptions): DynamicModule {
+  static register(): DynamicModule {
     return {
       module: DatabaseModule,
       imports: [
         MongooseModule.forRootAsync({
-          useFactory: (configService: ConfigService) => {
-            return {
-              uri: configService.get<string>('MONGODB_URI') + '/' + name,
-            };
-          },
-          inject: [ConfigService],
+          useClass: DatabaseService,
         }),
       ],
+      providers: [ConfigService],
     };
   }
 }

@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
+RUN npm run build
+
 
 FROM node:alpine As production
 
@@ -20,9 +22,8 @@ COPY package*.json ./
 
 RUN npm install --only=production
 
-COPY . .
+# COPY . .
 
-RUN npm run build
-# COPY --from=development /usr/src/app/dist ./dist
+COPY --from=development /usr/src/app/dist ./dist
 
 CMD [ "node", "dist/apps/billing/main" ]

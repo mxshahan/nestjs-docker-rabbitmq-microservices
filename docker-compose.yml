@@ -14,7 +14,7 @@ services:
       - auth
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
+      - erp_node_modules:/usr/src/app/node_modules
     ports:
       - '3000:3000'
 
@@ -32,7 +32,7 @@ services:
       - auth
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
+      - erp_node_modules:/usr/src/app/node_modules
 
   auth:
     build:
@@ -49,12 +49,16 @@ services:
       - rabbitmq
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
+      - erp_node_modules:/usr/src/app/node_modules
 
   rabbitmq:
     image: rabbitmq
+    restart: always
     ports:
       - '5672:5672'
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - rabbitmq_log:/var/log/rabbitmq
 
   mongodb-primary:
     image: mongo
@@ -64,6 +68,22 @@ services:
     ports:
       - '27017:27017'
 
+  postgres:
+    image: 'postgres:13'
+    restart: always
+    ports:
+      - '9999:5432'
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+      - PGDATA=/var/lib/postgresql/data/
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/:rw
+
 volumes:
   mongodb_master_data:
     driver: local
+  rabbitmq_data:
+  rabbitmq_log:
+  erp_node_modules:
+  postgres_data:
