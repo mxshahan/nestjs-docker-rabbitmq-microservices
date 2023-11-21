@@ -68,22 +68,9 @@ services:
     ports:
       - '27017:27017'
 
-  postgres:
-    image: 'postgres:13'
-    restart: always
-    ports:
-      - '9999:5432'
-    environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=password
-      - PGDATA=/var/lib/postgresql/data/
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/:rw
-
 volumes:
   mongodb_master_data:
     driver: local
   rabbitmq_data:
   rabbitmq_log:
   erp_node_modules:
-  postgres_data:
